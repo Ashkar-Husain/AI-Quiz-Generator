@@ -1,0 +1,424 @@
+.tabs {
+    display: flex;
+    background: linear-gradient(135deg, #667eea 0%, #282031 100%);
+    border-radius: 12px;
+    padding: 6px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.tab-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.tab-btn.active {
+    background: #ffffff;
+    color: #667eea;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ===================== CARD ===================== */
+
+.card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f1f1f1;
+    transition: all 0.3s ease;
+    display: none;
+}
+
+.card.active {
+    display: block;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+/* ===================== FORM LAYOUT ===================== */
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-group.full {
+    grid-column: span 2;
+}
+
+.form-group label {
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Inputs */
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    height: 45px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    padding: 0 14px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    background-color: #fff;
+}
+
+.form-group textarea {
+    min-height: 45px;
+    padding-top: 12px;
+    resize: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+    outline: none;
+}
+
+/* ===================== BUTTON ===================== */
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #5563d6;
+}
+
+.btn-success {
+    background: #22c55e;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #16a34a;
+}
+
+.btn-outline-primary {
+    border: 1px solid #667eea;
+    background: transparent;
+    color: #667eea;
+}
+
+.btn-outline-primary:hover {
+    background: #667eea;
+    color: #fff;
+}
+
+/* ===================== MOBILE ===================== */
+
+@media (max-width: 768px) {
+    .tabs {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .row {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .tab-btn {
+        font-size: 13px;
+        padding: 12px;
+    }
+}
+
+/* Excel Card */
+/* ===================== CARD EXCEL - MODERN ===================== */
+.card.excel {
+    background: linear-gradient(145deg, #4158d0, #000621, #000621);
+    background-size: 200% 200%;
+    animation: gradientFlow 8s ease infinite;
+    padding: 45px 40px;
+    border-radius: 30px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.card.excel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        circle at 30% 50%,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 50%
+    );
+    pointer-events: none;
+}
+
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ===================== DOWNLOAD BUTTON ===================== */
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #4158d0;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 16px;
+    letter-spacing: 0.3px;
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
+}
+
+.download-btn:hover {
+    background: white;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 20px 30px -8px rgba(0, 0, 0, 0.3);
+}
+
+.download-btn:active {
+    transform: translateY(-1px);
+}
+
+.btn-icon {
+    font-size: 18px;
+}
+
+/* ===================== DROP ZONE ===================== */
+.drop-zone {
+    margin-top: 35px;
+    padding: 45px 30px;
+    border: 2px dashed rgba(255, 255, 255, 0.4);
+    border-radius: 30px;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+}
+
+.drop-zone:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: white;
+    transform: scale(1.01);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.3);
+}
+
+.drop-zone.dragover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: white;
+    transform: scale(1.02);
+}
+
+/* ===================== UPLOAD CONTENT ===================== */
+.upload-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.upload-icon {
+    font-size: 64px;
+    line-height: 1;
+    margin-bottom: 5px;
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
+    animation: floatIcon 3s ease infinite;
+}
+
+@keyframes floatIcon {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.icon-excel {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 8%;
+    backdrop-filter: blur(5px);
+}
+
+.upload-content h4 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.upload-text {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 5px 0;
+}
+
+.drag-text {
+    font-size: 16px;
+    opacity: 0.95;
+    margin: 0;
+    font-weight: 400;
+}
+
+.separator {
+    opacity: 0.7;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ===================== FILE INPUT WRAPPER ===================== */
+.file-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin: 10px 0 5px;
+}
+
+/* ===================== CHOOSE BUTTON ===================== */
+.choose-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    border-radius: 50px;
+    border: none;
+    background: white;
+    color: #4158d0;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 15px 25px -8px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    letter-spacing: 0.3px;
+}
+
+.choose-btn:hover {
+    background: #f8f9ff;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 25px 35px -10px rgba(0, 0, 0, 0.4);
+}
+
+.choose-btn:active {
+    transform: translateY(-1px);
+}
+
+.file-info {
+    font-size: 13px;
+    opacity: 0.85;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 5px 15px;
+    border-radius: 30px;
+    letter-spacing: 0.3px;
+}
+
+/* ===================== FILE NAME ===================== */
+.file-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 300px;
+    width: 100%;
+    justify-content: center;
+}
+
+.file-icon {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+.file-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+
+.mt-4{
+    margin-top: 20px;
+}
+
+.error{
+    color: red;
+}
