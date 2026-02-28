@@ -92,6 +92,12 @@
 
         </form>
 
+        <a href="/auth/github"
+            style="display:flex;align-items:center;justify-content:center;
+   padding:10px;background:#24292e;color:white;
+   text-decoration:none;border-radius:6px;font-weight:bold;">
+            🐙 Continue with GitHub
+        </a>
 
     </div>
 

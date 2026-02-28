@@ -47,6 +47,7 @@ class AuthController extends Controller
 
         // 2. User Create
         $user = User::create([
+            'branch_id' => 'Main Branch',
             'user_name' => $request->name,
             'email'     => $request->email,
             'password'  => Hash::make($request->password),

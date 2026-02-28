@@ -81,7 +81,7 @@
 
     <!-- Quick Actions -->
     <div class="quick-actions">
-        <div class="quick-action-btn">
+        <div onclick="location.href = '{{route('admin.dashboard.upload_pdf')}}'" class="quick-action-btn">
             <i class="fas fa-file-upload"></i>
             <span>Upload PDF</span>
         </div>

@@ -1,16 +1,18 @@
 <?php
 
+use App\Exports\QuestionTemplateExport;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
-use Illuminate\Support\Facades\Route;
-
-use App\Exports\QuestionTemplateExport;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
-use Maatwebsite\Excel\Facades\Excel;
-use Maatwebsite\Excel\Excel as ExcelExcel;
-
 use App\Imports\QuizImport;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
+use Maatwebsite\Excel\Excel as ExcelExcel;
+use Maatwebsite\Excel\Facades\Excel;
 
 Route::post('/quiz-import', function (Request $request) {
 
@@ -107,5 +109,70 @@ Route::get('/dashboard/create-users', [UserController::class, 'create_users'])->
 
 Route::post('/dashboard/create-users', [UserController::class, 'add_new_user'])->middleware(['auth', 'role:admin'])->name('admin.dashboard.add_new_user');
 
+//* Quiz Through Pdf
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
+    //* PDF Upload
+    Route::get('/dashboard/upload-pdf', [QuizController::class, 'upload_pdf_page'])
+        ->name('admin.dashboard.upload_pdf');
+
+    Route::post('/dashboard/upload-pdf', [QuizController::class, 'uploadPdf'])
+        ->name('admin.dashboard.upload_pdf.store');
+
+    //* Quiz Setup
+    Route::get('/quiz/setup', [QuizController::class, 'quizSetup'])
+        ->name('quiz.setup');
+    //* start Quiz
+    Route::post('/quiz/start', [QuizController::class, 'startQuiz'])
+        ->middleware(['auth', 'role:admin'])
+        ->name('quiz.start');
+});
+
+
+//* Test Mail
 Route::get('/dashboard/test-mail', [UserController::class, 'test_mail']);
+
+
+//* Github Login
+// Redirect to GitHub (stateless)
+Route::get('/auth/github', function () {
+    return Socialite::driver('github')->stateless()->redirect();
+});
+
+// Callback (stateless)
+Route::get('/auth/github/callback', function () {
+    try {
+        $githubUser = Socialite::driver('github')->stateless()->user();
+    } catch (\Exception $e) {
+        return redirect('/login')->with('error', 'GitHub login failed. Please try again.');
+    }
+
+    $user = User::where('provider', 'github')
+        ->where('provider_id', $githubUser->getId())
+        ->first();
+
+    if (!$user) {
+        $existingUser = User::where('email', $githubUser->getEmail())->first();
+        if ($existingUser) {
+            return redirect('/login')
+                ->with('error', 'This email is already registered. Please login manually and link GitHub.');
+        }
+
+        $user = User::create([
+            'branch_id' => 'Main Branch',
+            'user_name' => $githubUser->getName() ?? $githubUser->getNickname(),
+            'email' => $githubUser->getEmail(),
+            'provider' => 'github',
+            'provider_id' => $githubUser->getId(),
+            'avatar' => $githubUser->getAvatar(),
+            'password' => bcrypt('github_login_dummy'),
+            'role' => 'user',
+        ]);
+    }
+
+    Auth::login($user);
+
+    return $user->role === 'admin'
+        ? redirect('/admin/dashboard')
+        : redirect('/user/dashboard');
+});
