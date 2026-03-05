@@ -99,7 +99,11 @@
 .form-group textarea {
     min-height: 45px;
     padding-top: 12px;
-    resize: none;
+    resize: vertical;
+}
+
+.textarea{
+    resize: none !important;
 }
 
 .form-group input:focus,
@@ -421,4 +425,85 @@
 
 .error{
     color: red;
+}
+
+/* Add Button */
+.add {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.right-align {
+    background: linear-gradient(145deg, #4158d0, #000621, #000621);
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 12px 28px;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.5px;
+    border: none;
+}
+
+.right-align:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.right-align:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.4);
+}
+
+.plus-icon {
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+
+.right-align:hover .plus-icon {
+    transform: rotate(90deg);
+}
+
+/* Optional: Add a subtle pulse animation */
+@keyframes subtlePulse {
+    0% {
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.6);
+    }
+    100% {
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+}
+
+.right-align {
+    animation: subtlePulse 3s infinite;
+}
+
+/* For a more minimal look, you can use this alternative */
+.right-align.minimal {
+    background: transparent;
+    color: #667eea;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #667eea;
+}
+
+.right-align.minimal:hover {
+    background: #667eea;
+    color: white;
 }

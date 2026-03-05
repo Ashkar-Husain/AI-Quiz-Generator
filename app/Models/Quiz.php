@@ -9,7 +9,7 @@ class Quiz extends Model
     protected $fillable = [
         'branch_id',
         'topic_id',
-        'question',
+        'question_id',
         'option_1',
         'option_2',
         'option_3',

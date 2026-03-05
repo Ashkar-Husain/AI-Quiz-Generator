@@ -1,13 +1,9 @@
 @extends('dashboard.masterLayout.layout')
 
-@section('title', 'Add Quiz')
-@section('header-heading')
-    Add New Quizzes
-@endsection
+@section('title', 'Add Topics')
+@section('header-heading', 'Add New Topics')
 
 @section('content')
-
-
     <div class="tabs">
         <button class="tab-btn " onclick="switchTab(this,'manual')">
             <i class="fas fa-pen-alt"></i>
@@ -19,96 +15,88 @@
         </button>
     </div>
 
-
-
     <div class="card manual active">
-        {{-- Add Topics --}}
-        <div onclick="location.href='{{ route('admin.dashboard.add_new_topic') }}'" class="add-new-topics add">
-            <div class="right-align">
-                <span class="plus-icon">+</span>
-                Add Topics
-            </div>
-        </div>
         <div class="quiz-content">
             {{-- ================= MANUAL FORM ================= --}}
             <div id="manual" class="tab-content">
 
+                @if (session('success'))
+                    <div style="color: green">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
-
-                <form action="" method="POST">
+                <form action="{{ route('admin.create.add_new_user') }}" method="POST" autocomplete="off">
                     @csrf
 
-
-                    {{-- Options --}}
                     <div class="row">
 
                         {{-- Topic --}}
-                        <?php $topics = []; ?>
                         <div class="form-group">
-                            <label>Select Topic</label>
-                            <select name="topic_id" class="form-control" required>
-                                <option value="">-- Select Topic --</option>
+                            <label>Topic<span class="error">*</span></label>
+                            <input autocomplete="off" name="topic"
+                                class="form-control @error('topic') is-invalid @enderror" value="{{ old('topic') }}"
+                                placeholder="eg. Advanced Calculous">
 
-                                @foreach ($topics as $topic)
-                                    <option value="{{ $topic->id }}">{{ $topic->name }}</option>
-                                @endforeach
-                            </select>
+                            @error('topic')
+                                <small class="error">{{ $message }}</small>
+                            @enderror
                         </div>
 
-                        {{-- Question --}}
-                        <div class="form-group">
-                            <label>Question</label>
-                            <textarea name="question" class="form-control" required></textarea>
-                        </div>
-
-
-
+                        {{-- Subject --}}
                         <div class="col-md-6 form-group">
-                            <label>Option 1</label>
-                            <input type="text" name="option1" class="form-control" required>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Option 2</label>
-                            <input type="text" name="option2" class="form-control" required>
-                        </div>
-                        <div class="col-md-6 mt-3 form-group">
-                            <label>Option 3</label>
-                            <input type="text" name="option3" class="form-control" required>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Option 4</label>
-                            <input type="text" name="option4" class="form-control" required>
-                        </div>
+                            <label>Subject<span class="error">*</span></label>
+                            <input autocomplete="off" type="text" name="subject"
+                                class="form-control @error('subject') is-invalid @enderror" value="{{ old('subject') }}"
+                                placeholder="eg. Mathematics">
 
-                        {{-- Correct Answer --}}
-                        <div class="form-group">
-                            <label>Correct Answer</label>
-                            <select name="correct_answer" class="form-control" required>
-                                <option value="">-- Select Correct Option --</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                                <option value="4">Option 4</option>
-                            </select>
+                            @error('subject')
+                                <small class="error">{{ $message }}</small>
+                            @enderror
                         </div>
 
                         {{-- Difficulty --}}
-                        <div class="form-group">
-                            <label>Difficulty Level</label>
-                            <select name="difficulty" class="form-control" required>
-                                <option value="">-- Select Difficulty --</option>
-                                <option value="easy">Easy</option>
-                                <option value="medium">Medium</option>
-                                <option value="hard">Hard</option>
+                        <div class="col-md-6 form-group">
+                            <label>Difficulty<span class="error">*</span></label>
+                            <select name="difficulty" autocomplete="off"
+                                class="form-control @error('difficulty') is-invalid @enderror">
+
+                                <option value="">-- Select --</option>
+
+                                @foreach ($difficulties as $difficulty)
+                                    <option value="{{ $difficulty['difficulty_id'] }}">
+                                        {{ $difficulty['difficulty'] }}
+                                    </option>
+                                @endforeach
+
                             </select>
+                            @error('difficulty')
+                                <small class="error">{{ $message }}</small>
+                            @enderror
                         </div>
 
+                        {{-- Font Icon --}}
+                        <div class="col-md-6 mt-3 form-group">
+                            <label>Icon<small class="error"> (Font Awesome 6.4.0)</small></label>
+                            <input type="text" name="font_icon" class="form-control" autocomplete="off"
+                                placeholder='<i class="fa-solid fa-calculator"></i>'>
+                        </div>
+
+                        <div class="col-md-12 mt-3 form-group full">
+                            <label>
+                                Description
+                                <small class="error">*</small>
+                            </label>
+
+                            <textarea name="description" class="form-control" autocomplete="off"
+                                placeholder="Enter description here..."></textarea>
+                        </div>
 
                     </div>
 
                     <button type="submit" class="btn btn-primary mt-4">Submit</button>
-
                 </form>
+
             </div>
 
         </div>

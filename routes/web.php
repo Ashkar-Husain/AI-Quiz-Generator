@@ -103,11 +103,20 @@ Route::post('/reset-password', [AuthController::class, 'reset_password'])
 
 
 //* Admin Dashboard Routes
+
+//* Add New Topics
+Route::get('/dashboard/create-topics', [DashboardController::class, 'add_new_topic'])->middleware(['auth', 'role:admin'])->name('admin.dashboard.add_new_topic');
+
+
+//* Add New Quiz
 Route::get('/dashboard/create-quizzes', [DashboardController::class, 'create_quizzes'])->middleware(['auth', 'role:admin'])->name('admin.dashboard.add_quiz');
 
 Route::get('/dashboard/create-users', [UserController::class, 'create_users'])->middleware(['auth', 'role:admin'])->name('admin.dashboard.add_users');
 
 Route::post('/dashboard/create-users', [UserController::class, 'add_new_user'])->middleware(['auth', 'role:admin'])->name('admin.dashboard.add_new_user');
+Route::post('/dashboard/create-users', [UserController::class, 'create_add_new_topic'])->middleware(['auth', 'role:admin'])->name('admin.create.add_new_user');
+
+
 
 //* Quiz Through Pdf
 Route::middleware(['auth', 'role:admin'])->group(function () {
