@@ -124,6 +124,12 @@ Route::get('/dashboard/create-users', [UserController::class, 'create_users'])->
 Route::post('/dashboard/create-users', [UserController::class, 'add_new_user'])->middleware(['auth', 'role:admin'])->name('admin.dashboard.add_new_user');
 // Route::post('/dashboard/create-users', [UserController::class, 'create_add_new_topic'])->middleware(['auth', 'role:admin'])->name('admin.create.add_new_user');
 
+//? Generate Quizzes (Welcome Page)
+// Route::get('/generate_quiz/{topic_id}', [QuizController::class, 'generate_quiz'])->name('generate_quiz');
+Route::get('/start_quiz/{topic_id}', [QuizController::class, 'start_quiz'])->name('start_quiz');
+Route::get('/quiz/{topic_id}', [QuizController::class, 'generate_quiz'])->name('generate_quiz');
+
+
 
 
 //* Quiz Through Pdf

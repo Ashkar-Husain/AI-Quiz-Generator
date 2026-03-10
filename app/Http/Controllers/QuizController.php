@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Smalot\PdfParser\Parser;
 
 class QuizController extends Controller
@@ -143,4 +146,151 @@ class QuizController extends Controller
 
         return $questions;
     }
+
+
+    //? Generate Quiz (Welcome Page)
+    // public function generate_quiz($topic_id)
+    // {
+    //     $topic_id = Crypt::decrypt($topic_id);
+    //     $max_questions = 10;
+
+    //     $topic = DB::table('topics')->select('icon','topic_name')->where('id',9)->get();
+
+    //     $quizData = DB::table('questions as q')
+    //         ->join('topics as t', 't.id', '=', 'q.topic_id')
+    //         ->join('options as o', 'o.question_id', '=', 'q.id')
+    //         ->select([
+    //             't.topic_name',
+    //             't.subject',
+    //             't.difficulty_id',
+    //             't.icon as topic_icon',
+    //             't.topic_description',
+    //             'q.id as question_id',
+    //             'q.question',
+    //             'o.option_1',
+    //             'o.option_2',
+    //             'o.option_3',
+    //             'o.option_4',
+    //             'o.correct_option'
+    //         ])
+    //         ->where('q.topic_id', $topic_id)
+    //         ->inRandomOrder()
+    //         ->limit($max_questions)
+    //         ->get();
+
+
+
+    //     return view('quiz', compact('quizData'));
+    // }
+
+
+
+    // public function generate_quiz($topic_id)
+    // {
+    //     $topic_id = Crypt::decrypt($topic_id);
+    //     $max_questions = 10;
+
+    //     // If user clicked Generate Quiz again → reset quiz
+    //     if (request()->has('new')) {
+    //         Session::forget('quiz_questions_' . $topic_id);
+    //     }
+
+    //     $topic = DB::table('topics')
+    //         ->select('icon', 'topic_name')
+    //         ->where('id', $topic_id)
+    //         ->first();
+
+    //     if (!Session::has('quiz_questions_' . $topic_id)) {
+
+    //         $question_ids = DB::table('questions')
+    //             ->where('topic_id', $topic_id)
+    //             ->inRandomOrder()
+    //             ->limit($max_questions)
+    //             ->pluck('id')
+    //             ->toArray();
+
+    //         Session::put('quiz_questions_' . $topic_id, $question_ids);
+    //     } else {
+    //         $question_ids = Session::get('quiz_questions_' . $topic_id);
+    //     }
+
+    //     $quizData = DB::table('questions as q')
+    //         ->join('topics as t', 't.id', '=', 'q.topic_id')
+    //         ->join('options as o', 'o.question_id', '=', 'q.id')
+    //         ->select([
+    //             't.topic_name',
+    //             't.subject',
+    //             't.difficulty_id',
+    //             't.icon as topic_icon',
+    //             't.topic_description',
+    //             'q.id as question_id',
+    //             'q.question',
+    //             'o.option_1',
+    //             'o.option_2',
+    //             'o.option_3',
+    //             'o.option_4',
+    //             'o.correct_option'
+    //         ])
+    //         ->whereIn('q.id', $question_ids)
+    //         ->get();
+
+    //     return view('quiz', compact('quizData', 'topic'));
+    // }
+
+
+    public function start_quiz($topic_id)
+    {
+        $topic_id = Crypt::decrypt($topic_id);
+
+        Session::forget('quiz_questions_' . $topic_id);
+
+        return redirect()->route('generate_quiz', encrypt($topic_id));
+    }
+
+
+    public function generate_quiz($topic_id)
+    {
+        $topic_id = Crypt::decrypt($topic_id);
+        $max_questions = 10;
+
+        $session_key = 'quiz_questions_' . $topic_id;
+
+        $topic = DB::table('topics')
+            ->select('icon', 'topic_name')
+            ->where('id', $topic_id)
+            ->first();
+
+        if (!Session::has($session_key)) {
+
+            $question_ids = DB::table('questions')
+                ->where('topic_id', $topic_id)
+                ->inRandomOrder()
+                ->limit($max_questions)
+                ->pluck('id')
+                ->toArray();
+
+            Session::put($session_key, $question_ids);
+        } else {
+            $question_ids = Session::get($session_key);
+        }
+
+        $quizData = DB::table('questions as q')
+            ->join('options as o', 'o.question_id', '=', 'q.id')
+            ->select(
+                'q.id as question_id',
+                'q.question',
+                'o.option_1',
+                'o.option_2',
+                'o.option_3',
+                'o.option_4',
+                'o.correct_option'
+            )
+            ->whereIn('q.id', $question_ids)
+            ->orderByRaw("FIELD(q.id," . implode(',', $question_ids) . ")")
+            ->get();
+
+        return view('quiz', compact('quizData', 'topic'));
+    }
+
+    //!-------------ends
 }

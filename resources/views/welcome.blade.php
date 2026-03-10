@@ -418,7 +418,8 @@
                     <div class="thumbnail-card">
                         <div class="thumbnail-img">
                             {!! $quiz->icon !!}
-                            <div class="pdf-icon"><i style="color: #E2E8F0" class="fa-solid fa-circle-question"></i></i></div>
+                            <div class="pdf-icon"><i style="color: #E2E8F0" class="fa-solid fa-circle-question"></i></i>
+                            </div>
                         </div>
                         <div class="thumbnail-content">
                             <h3 class="thumbnail-title">{{ $quiz->topic_name }}</h3>
@@ -428,7 +429,9 @@
                                 <span class="tag">15 Questions</span>
                                 <span class="tag">{{ $quiz->difficulty_id }}</span>
                             </div>
-                            <a href="#" class="btn btn-generate">Generate Similar Quiz</a>
+                            <a href="{{ route('start_quiz', encrypt($quiz->id)) }}" class="btn btn-generate">
+                                Generate Quiz
+                            </a>
                         </div>
                     </div>
                 @endforeach
