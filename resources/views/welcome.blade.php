@@ -384,7 +384,7 @@
 <body>
 
     <!-- Header -->
-   <header>
+    <header>
         <nav class="navbar">
             <div class="logo-container">
                 <div class="logo">SQ</div>
@@ -414,26 +414,26 @@
             <h2 class="section-title">Recent Quiz Generations</h2>
             <div class="thumbnails-grid">
                 <!-- Thumbnail 1 -->
-                <div class="thumbnail-card">
-                    <div class="thumbnail-img">
-                        <i class="fas fa-file-alt"></i>
-                        <div class="pdf-icon">PDF</div>
-                    </div>
-                    <div class="thumbnail-content">
-                        <h3 class="thumbnail-title">History of Ancient Civilizations</h3>
-                        <p class="thumbnail-desc">A comprehensive quiz covering ancient Egyptian, Greek, and Roman
-                            civilizations with multiple choice and true/false questions.</p>
-                        <div class="thumbnail-tags">
-                            <span class="tag">History</span>
-                            <span class="tag">15 Questions</span>
-                            <span class="tag">Medium Difficulty</span>
+                @foreach ($indexQuizzes as $quiz)
+                    <div class="thumbnail-card">
+                        <div class="thumbnail-img">
+                            {!! $quiz->icon !!}
+                            <div class="pdf-icon"><i style="color: #E2E8F0" class="fa-solid fa-circle-question"></i></i></div>
                         </div>
-                        <a href="#" class="btn btn-generate">Generate Similar Quiz</a>
+                        <div class="thumbnail-content">
+                            <h3 class="thumbnail-title">{{ $quiz->topic_name }}</h3>
+                            <p class="thumbnail-desc">{{ $quiz->topic_description }}</p>
+                            <div class="thumbnail-tags">
+                                <span class="tag">{{ $quiz->subject }}</span>
+                                <span class="tag">15 Questions</span>
+                                <span class="tag">{{ $quiz->difficulty_id }}</span>
+                            </div>
+                            <a href="#" class="btn btn-generate">Generate Similar Quiz</a>
+                        </div>
                     </div>
-                </div>
-
+                @endforeach
                 <!-- Thumbnail 2 -->
-                <div class="thumbnail-card">
+                {{-- <div class="thumbnail-card">
                     <div class="thumbnail-img">
                         <i class="fas fa-flask"></i>
                         <div class="pdf-icon">PDF</div>
@@ -468,7 +468,7 @@
                         </div>
                         <a href="#" class="btn btn-generate">Generate Similar Quiz</a>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </section>
 

@@ -26,7 +26,8 @@
                     </div>
                 @endif
 
-                <form action="{{ route('admin.create.add_new_user') }}" method="POST" autocomplete="off">
+                <form action="{{ route('admin.create.store_new_topic') }}" method="POST" autocomplete="off">
+
                     @csrf
 
                     <div class="row">
@@ -88,8 +89,7 @@
                                 <small class="error">*</small>
                             </label>
 
-                            <textarea name="description" class="form-control" autocomplete="off"
-                                placeholder="Enter description here..."></textarea>
+                            <textarea name="description" class="form-control" autocomplete="off" placeholder="Enter description here..."></textarea>
                         </div>
 
                     </div>

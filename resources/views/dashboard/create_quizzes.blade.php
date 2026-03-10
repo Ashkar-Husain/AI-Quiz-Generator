@@ -23,7 +23,8 @@
 
     <div class="card manual active">
         {{-- Add Topics --}}
-        <div onclick="location.href='{{ route('admin.dashboard.add_new_topic') }}'" class="add-new-topics add">
+        {{-- <div onclick="location.href='{{ route('admin.dashboard.add_new_topic') }}'" class="add-new-topics add"> --}}
+       <div onclick="window.location='{{ route('admin.dashboard.add_new_topic') }}'" class="add-new-topics add">
             <div class="right-align">
                 <span class="plus-icon">+</span>
                 Add Topics
@@ -35,7 +36,7 @@
 
 
 
-                <form action="" method="POST">
+                <form action="{{ route('admin.dashboard.create_quizzes_manual') }}" method="POST">
                     @csrf
 
 
@@ -43,14 +44,14 @@
                     <div class="row">
 
                         {{-- Topic --}}
-                        <?php $topics = []; ?>
+
                         <div class="form-group">
                             <label>Select Topic</label>
                             <select name="topic_id" class="form-control" required>
                                 <option value="">-- Select Topic --</option>
 
                                 @foreach ($topics as $topic)
-                                    <option value="{{ $topic->id }}">{{ $topic->name }}</option>
+                                    <option value="{{ $topic->id }}">{{ $topic->topic_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -89,17 +90,6 @@
                                 <option value="2">Option 2</option>
                                 <option value="3">Option 3</option>
                                 <option value="4">Option 4</option>
-                            </select>
-                        </div>
-
-                        {{-- Difficulty --}}
-                        <div class="form-group">
-                            <label>Difficulty Level</label>
-                            <select name="difficulty" class="form-control" required>
-                                <option value="">-- Select Difficulty --</option>
-                                <option value="easy">Easy</option>
-                                <option value="medium">Medium</option>
-                                <option value="hard">Hard</option>
                             </select>
                         </div>
 

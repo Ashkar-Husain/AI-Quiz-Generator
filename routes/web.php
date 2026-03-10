@@ -59,7 +59,11 @@ Route::get('/download-template/{type}', function ($type) {
 
 
 Route::get('/', function () {
-    return view('welcome');
+    $indexQuizzes = DB::table('topics')
+        ->select('id', 'topic_name', 'subject', 'icon', 'topic_description', 'difficulty_id')
+        ->whereIn('id', [7, 8, 9])
+        ->get();
+    return view('welcome', compact('indexQuizzes'));
 });
 
 //* Signup
@@ -107,14 +111,18 @@ Route::post('/reset-password', [AuthController::class, 'reset_password'])
 //* Add New Topics
 Route::get('/dashboard/create-topics', [DashboardController::class, 'add_new_topic'])->middleware(['auth', 'role:admin'])->name('admin.dashboard.add_new_topic');
 
+Route::post('/dashboard/create-topics', [DashboardController::class, 'store_new_topic'])->middleware(['auth', 'role:admin'])->name('admin.create.store_new_topic');
+
 
 //* Add New Quiz
 Route::get('/dashboard/create-quizzes', [DashboardController::class, 'create_quizzes'])->middleware(['auth', 'role:admin'])->name('admin.dashboard.add_quiz');
 
+Route::post('/dashboard/create-quizzes', [DashboardController::class, 'create_quizzes_manual'])->middleware(['auth', 'role:admin'])->name('admin.dashboard.create_quizzes_manual');
+
 Route::get('/dashboard/create-users', [UserController::class, 'create_users'])->middleware(['auth', 'role:admin'])->name('admin.dashboard.add_users');
 
 Route::post('/dashboard/create-users', [UserController::class, 'add_new_user'])->middleware(['auth', 'role:admin'])->name('admin.dashboard.add_new_user');
-Route::post('/dashboard/create-users', [UserController::class, 'create_add_new_topic'])->middleware(['auth', 'role:admin'])->name('admin.create.add_new_user');
+// Route::post('/dashboard/create-users', [UserController::class, 'create_add_new_topic'])->middleware(['auth', 'role:admin'])->name('admin.create.add_new_user');
 
 
 

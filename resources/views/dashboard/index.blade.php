@@ -81,7 +81,7 @@
 
     <!-- Quick Actions -->
     <div class="quick-actions">
-        <div onclick="location.href = '{{route('admin.dashboard.upload_pdf')}}'" class="quick-action-btn">
+        <div onclick="location.href = '{{ route('admin.dashboard.upload_pdf') }}'" class="quick-action-btn">
             <i class="fas fa-file-upload"></i>
             <span>Upload PDF</span>
         </div>
@@ -90,7 +90,7 @@
             <i class="fas fa-plus-circle"></i>
             <span>Create Quiz</span>
         </div>
-        <div onclick="location.href=' {{ route('admin.dashboard.add_users') }} '"  class="quick-action-btn">
+        <div onclick="location.href=' {{ route('admin.dashboard.add_users') }} '" class="quick-action-btn">
             <i class="fas fa-user-plus"></i>
             <span>Add Users</span>
         </div>
@@ -103,39 +103,47 @@
     <!-- Recent Quizzes -->
     <div class="section-header">
         <h2 class="section-title">Recent Quizzes</h2>
-        <button class="btn-view-all">
-            View All <i class="fas fa-arrow-right"></i>
-        </button>
+        @php
+            $topicCount = count($topics);
+        @endphp
+
+        @if ($topicCount > 5)
+            <button class="btn-view-all">
+                View All <i class="fas fa-arrow-right"></i>
+            </button>
+        @endif
     </div>
 
     <div class="thumbnails-grid">
         <!-- Quiz 1 -->
-        <div class="thumbnail-card">
-            <div class="thumbnail-img">
-                <i class="fas fa-history"></i>
-                <div class="pdf-icon">PDF</div>
-            </div>
-            <div class="thumbnail-content">
-                <h3 class="thumbnail-title">World History Quiz</h3>
-                <p class="thumbnail-desc">A comprehensive quiz covering major world history events from
-                    ancient civilizations to modern times.</p>
-                <div class="thumbnail-meta">
-                    <span><i class="fas fa-calendar"></i> 2 days ago</span>
-                    <span><i class="fas fa-users"></i> 45 attempts</span>
+
+        @foreach ($topics as $topic)
+            <div class="thumbnail-card">
+                <div class="thumbnail-img">
+                    {!! $topic->icon !!}
+                    <div class="pdf-icon">PDF</div>
                 </div>
-                <div class="thumbnail-actions">
-                    <button class="btn-action btn-primary">
-                        <i class="fas fa-play"></i> Take Quiz
-                    </button>
-                    <button class="btn-action btn-outline">
-                        <i class="fas fa-chart-bar"></i> Analytics
-                    </button>
+                <div class="thumbnail-content">
+                    <h3 class="thumbnail-title">{{ $topic->topic_name ?? '-' }}</h3>
+                    <p class="thumbnail-desc">{{ $topic->topic_description ?? '-' }}</p>
+                    <div class="thumbnail-meta">
+                        <span><i class="fas fa-calendar"></i> 2 days ago</span>
+                        <span><i class="fas fa-users"></i> 45 attempts</span>
+                    </div>
+                    <div class="thumbnail-actions">
+                        <button class="btn-action btn-primary">
+                            <i class="fas fa-play"></i> Take Quiz
+                        </button>
+                        <button class="btn-action btn-outline">
+                            <i class="fas fa-chart-bar"></i> Analytics
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endforeach
 
         <!-- Quiz 2 -->
-        <div class="thumbnail-card">
+        {{-- <div class="thumbnail-card">
             <div class="thumbnail-img">
                 <i class="fas fa-flask"></i>
                 <div class="pdf-icon">PDF</div>
@@ -157,10 +165,10 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Quiz 3 -->
-        <div class="thumbnail-card">
+        {{-- <div class="thumbnail-card">
             <div class="thumbnail-img">
                 <i class="fas fa-code"></i>
                 <div class="pdf-icon">PDF</div>
@@ -182,11 +190,11 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         {{-- extra quizzes --}}
         <!-- Quiz 2 -->
-        <div class="thumbnail-card">
+        {{-- <div class="thumbnail-card">
             <div class="thumbnail-img">
                 <i class="fas fa-flask"></i>
                 <div class="pdf-icon">PDF</div>
@@ -208,10 +216,10 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Quiz 3 -->
-        <div class="thumbnail-card">
+        {{-- <div class="thumbnail-card">
             <div class="thumbnail-img">
                 <i class="fas fa-code"></i>
                 <div class="pdf-icon">PDF</div>
@@ -233,7 +241,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
     <!-- Recent Activity -->
